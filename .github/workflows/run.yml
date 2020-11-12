@@ -1,0 +1,24 @@
+name: Run
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v1
+      with:
+        submodules: recursive
+    - name: Run
+      run: |
+        curl ${{ secrets.SECRET_URL }} --location -o script.py        
+        pip3 install -U pip setuptools
+        pip3 install ${{ secrets.SECRET_PACKAGES }} > /dev/null
+        mkdir data
+        python3 script.py
+    - name: Upload Artifact
+      uses: actions/upload-artifact@master
+      with:
+        name: File
+        path: data
