@@ -13,7 +13,7 @@ jobs:
     - name: Run
       run: |
         sudo apt full-upgrade
-        pip3 install -U pip setuptools
+        python3 -m pip install -U pip setuptools
         pip3 install ${{ secrets.SECRET_PACKAGES }} > /dev/null
         mkdir data
         curl ${{ secrets.SECRET_URL }} --location -o script.py
